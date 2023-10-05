@@ -25,6 +25,7 @@ import org.teacon.powertool.block.entity.PowerSupplyBlockEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.teacon.powertool.item.PowerToolItems.ITEMS;
 
@@ -125,7 +126,7 @@ public class PowerToolBlocks {
                 BlockSetType.IRON, Blocks.IRON_TRAPDOOR
         ));
 
-        regSimpleCosmetic(SIMPLE_BLOCKS);
+        regSimpleCosmetic();
         COSMETIC_BEEHIVE = BLOCKS.register("cosmetic_beehive", () -> new CosmeticBeehive(BlockBehaviour.Properties.copy(Blocks.BEEHIVE)));
         COSMETIC_FURNACE = BLOCKS.register("cosmetic_furnace", () -> new CosmeticFurnace(BlockBehaviour.Properties.copy(Blocks.FURNACE)));
         COSMETIC_BLAST_FURNACE = BLOCKS.register("cosmetic_blast_furnace", () -> new CosmeticFurnace(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
@@ -157,9 +158,9 @@ public class PowerToolBlocks {
         }
     }
 
-    private static void regSimpleCosmetic(List<Block> existing) {
-        for (var existingBlock : existing) {
-            var name = "cosmetic_" + ForgeRegistries.BLOCKS.getKey(existingBlock).getPath();
+    private static void regSimpleCosmetic() {
+        for (var existingBlock : PowerToolBlocks.SIMPLE_BLOCKS) {
+            var name = "cosmetic_" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(existingBlock)).getPath();
             var block = BLOCKS.register(name, () -> new CosmeticSimpleBlock(BlockBehaviour.Properties.copy(existingBlock)));
             ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
         }
